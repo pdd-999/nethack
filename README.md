@@ -1,7 +1,7 @@
 # Reinforcement Learning 
 
-## TODO
-[ ] Train an DQN Agent to play CartPole.
+**\[Todo\]**
+- [ ] Train an DQN Agent to play CartPole.
 
 ## Introduction
 Although the repo's name is `nethack`, it actually stores my progression in researching Reinforcement Learning, start with CartPole. The origin of the name came from my initial purpose of making this repo, play `nethack`. That's all.
