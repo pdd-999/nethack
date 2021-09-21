@@ -1,6 +1,6 @@
 # Reinforcement Learning 
 
-**\[Todo\]**
+**\[TODO\]**
 - [ ] Train an DQN Agent to play CartPole.
 
 ## Introduction
