@@ -14,7 +14,7 @@
 This section summarize the result of researching.
 
 #### CartPole
-| Policy | Average rewards (100 episodes) | 
+| Policy | Average rewards (100 episodes) |
 |:----------:|:-------------:|
 | `random` | 25.43 |
 | `theta` | 42.29 |

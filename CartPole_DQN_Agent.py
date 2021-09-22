@@ -12,8 +12,20 @@ import logging
 logging.basicConfig(level=logging.INFO)
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
+import argparse
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Train a DQN Agent to play CartPole')
+    parser.add_argument('--exp-replay-size', default=256, type=int, help='Experience replay size')
+    parser.add_argument('--seed', default=1423, type=int, help='Random seed')
+    parser.add_argument('--num-episodes', default=100000, type=int, help='Number of episodes')
+    parser.add_argument('--lr', default=1e-3, type=float, help='Learning rate')
+    parser.add_argument('--sync-freq', default=5, type=int, help='Network synchronize frequency')
+    parser.add_argument('--save-path', default='CartPoleAgent.pth', type=int, help='Path to save model')
+
+    return parser.parse_args()
+
 class DQN_Agent:
-    
     def __init__(self, seed, layer_sizes, lr, sync_freq, exp_replay_size, save_path):
         torch.manual_seed(seed)
         self.q_net = self.build_nn(layer_sizes)
@@ -95,11 +107,18 @@ class DQN_Agent:
         logging.info(f'Successfully save model at {self.save_path}.')
 
 if __name__ == '__main__':
+    args = parse_args()
+
     env = gym.make('CartPole-v0')
     input_dim = env.observation_space.shape[0]
     output_dim = env.action_space.n
     exp_replay_size = 256
-    agent = DQN_Agent(seed = 1423, layer_sizes = [input_dim, 64, output_dim], lr = 1e-3, sync_freq = 5, exp_replay_size = exp_replay_size, save_path = 'CartPoleAgent.pth')
+    agent = DQN_Agent(seed = args.seed, 
+                      layer_sizes = [input_dim, 64, output_dim], 
+                      lr = args.lr, 
+                      sync_freq = args.sync_freq, 
+                      exp_replay_size = args.exp_replay_size, 
+                      save_path = args.save_path)
 
     logging.info('Initiliaze experience replay.')     
     index = 0
@@ -116,8 +135,6 @@ if __name__ == '__main__':
                 break
                 
     # Main training loop
-    # losses_list, reward_list, episode_len_list, epsilon_list  = [], [], [], []
-
     losses_meter = AverageMeter()
     reward_meter = AverageMeter()
     episode_len_meter = AverageMeter()
@@ -149,11 +166,6 @@ if __name__ == '__main__':
         if epsilon > 0.05 :
             epsilon -= (1 / 5000)
         
-        # losses_list.append(losses/ep_len) 
-        # reward_list.append(rew)
-        # episode_len_list.append(ep_len)
-        # epsilon_list.append(epsilon)
-
         losses_meter.update(losses/ep_len)
         reward_meter.update(rew)
         episode_len_meter.update(ep_len)
