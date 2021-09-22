@@ -8,6 +8,8 @@
 
 - No information about the game will be provided unless I think it's needed. Use your searching tool wisely.
 
+- You can always run `python3 [THE_ENVIRONMENT].py --help` to get the list of configurable parameters. 
+
 ## Results
 This section summarize the result of researching.
 
