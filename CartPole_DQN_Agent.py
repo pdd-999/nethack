@@ -112,11 +112,12 @@ if __name__ == '__main__':
     env = gym.make('CartPole-v0')
     input_dim = env.observation_space.shape[0]
     output_dim = env.action_space.n
+    exp_replay_size = args.exp_replay_size
     agent = DQN_Agent(seed = args.seed, 
                       layer_sizes = [input_dim, 64, output_dim], 
                       lr = args.lr, 
                       sync_freq = args.sync_freq, 
-                      exp_replay_size = args.exp_replay_size, 
+                      exp_replay_size = exp_replay_size, 
                       save_path = args.save_path)
 
     logging.info('Initiliaze experience replay.')     
