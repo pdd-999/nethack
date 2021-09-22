@@ -112,7 +112,6 @@ if __name__ == '__main__':
     env = gym.make('CartPole-v0')
     input_dim = env.observation_space.shape[0]
     output_dim = env.action_space.n
-    exp_replay_size = 256
     agent = DQN_Agent(seed = args.seed, 
                       layer_sizes = [input_dim, 64, output_dim], 
                       lr = args.lr, 
