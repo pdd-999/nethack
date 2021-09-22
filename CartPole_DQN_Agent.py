@@ -18,10 +18,10 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Train a DQN Agent to play CartPole')
     parser.add_argument('--exp-replay-size', default=256, type=int, help='Experience replay size')
     parser.add_argument('--seed', default=1423, type=int, help='Random seed')
-    parser.add_argument('--num-episodes', default=100000, type=int, help='Number of episodes')
+    parser.add_argument('--episodes', default=100000, type=int, help='Number of episodes')
     parser.add_argument('--lr', default=1e-3, type=float, help='Learning rate')
     parser.add_argument('--sync-freq', default=5, type=int, help='Network synchronize frequency')
-    parser.add_argument('--save-path', default='CartPoleAgent.pth', type=int, help='Path to save model')
+    parser.add_argument('--save-path', default='CartPoleAgent.pth', type=str, help='Path to save model')
 
     return parser.parse_args()
 
@@ -57,7 +57,6 @@ class DQN_Agent:
             Qp = self.q_net(torch.from_numpy(state).float().to(device))
         Q,A = torch.max(Qp, axis=0)
         A = A if torch.rand(1,).item() > epsilon else torch.randint(0,action_space_len,(1,))
-        import ipdb; ipdb.set_trace(context=10)
         return A
     
     def get_q_next(self, state):
@@ -141,7 +140,7 @@ if __name__ == '__main__':
     epsilon_meter = AverageMeter()
 
     index = 128
-    episodes = 10000
+    episodes = args.episodes
     epsilon = 1.
 
     logging.info('Start training.')    
